@@ -6,7 +6,7 @@ using namespace std;
 using bldg = pair<long long, long long>;  
 
 
-vector<bldg> merge (vector<bldg> v){
+vector<bldg> merge (vector<bldg>& v){
     vector<bldg> merged;
     bldg last_bldg = v[0];
     for (int i = 1; i < v.size(); i++)
@@ -26,7 +26,7 @@ vector<bldg> merge (vector<bldg> v){
 }
 
 
-long long count_posters(vector<bldg> buildings)
+long long count_posters(vector<bldg>& buildings)
 {
     //stack of heights
     vector<long long> h = {0};
@@ -50,13 +50,14 @@ int main(){
     scanf("%d", &n);
     // list of length and heigh of buildings
     vector<bldg> b;
+    b.reserve(n);
     for (int i = 0; i < n; ++i)
     {   
         long long d, w;
         scanf ("%lld %lld", &d, &w);
-        b.push_back(make_pair(d,w));
+        b.push_back({d,w});
     }
-    b = merge(b);
+    b = move(merge(b));
     long long posters = count_posters(b);
     printf("%lld\n", posters);
 }
